@@ -52,6 +52,8 @@ public class TowerStat : MonoBehaviour
                 {
                     NetworkManager.Instance.PV.RPC("GameOver", RpcTarget.All);
                     PhotonNetwork.CurrentRoom.IsOpen = true;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
                     PhotonNetwork.LoadLevel("Title");
                 }
             }

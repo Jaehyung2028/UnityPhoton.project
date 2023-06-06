@@ -260,6 +260,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         ChatRPC("<color=yellow>" + otherPlayer.NickName + "¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ</color>");
         Team[otherPlayer.GetPlayerNumber()].text = "";
+        Team[otherPlayer.GetPlayerNumber()].transform.GetChild(0).gameObject.SetActive(false);
+        if(PhotonNetwork.LocalPlayer.IsMasterClient) Team[PhotonNetwork.LocalPlayer.GetPlayerNumber()].transform.GetChild(0).gameObject.SetActive(true);
         PV.RPC("RoomPlayerNumber", RpcTarget.All);
     }
 

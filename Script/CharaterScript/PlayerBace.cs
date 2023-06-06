@@ -111,24 +111,24 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
 
         if (Input.GetMouseButtonDown(0)) StartCoroutine(Attack());
 
-        if (Input.GetKeyDown(KeyCode.Q) && GameDataManager.Instance.CoolTime[0].fillAmount == 0)
+        if (Input.GetKeyDown(KeyCode.Q) && GameDataManager.Instance.Cooldown_time_Image[0].fillAmount == 0)
         {
-            StartCoroutine(CoolTime(0, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[0]));
+            StartCoroutine(Skill_Cooldown_time(0, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[0]));
             PV.RPC("Qrutin", RpcTarget.All);
         }
-        if (Input.GetKeyDown(KeyCode.E) && GameDataManager.Instance.CoolTime[1].fillAmount == 0)
+        if (Input.GetKeyDown(KeyCode.E) && GameDataManager.Instance.Cooldown_time_Image[1].fillAmount == 0)
         {
-            StartCoroutine(CoolTime(1, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[1]));
+            StartCoroutine(Skill_Cooldown_time(1, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[1]));
             PV.RPC("Erutin", RpcTarget.All);
         }
-        if (Input.GetKeyDown(KeyCode.R) && GameDataManager.Instance.CoolTime[2].fillAmount == 0)
+        if (Input.GetKeyDown(KeyCode.R) && GameDataManager.Instance.Cooldown_time_Image[2].fillAmount == 0)
         {
-            StartCoroutine(CoolTime(2, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[2]));
+            StartCoroutine(Skill_Cooldown_time(2, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[2]));
             PV.RPC("Rrutin", RpcTarget.All);
         }
-        if (Input.GetKeyDown(KeyCode.T) && GameDataManager.Instance.CoolTime[3].fillAmount == 0)
+        if (Input.GetKeyDown(KeyCode.T) && GameDataManager.Instance.Cooldown_time_Image[3].fillAmount == 0)
         {
-            StartCoroutine(CoolTime(3, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[3]));
+            StartCoroutine(Skill_Cooldown_time(3, GameDataManager.Instance.CharacterData.Name[GameDataManager.Instance.SelectCharaterName].Cooldown_time[3]));
             PV.RPC("Trutin", RpcTarget.All);
         }
 
@@ -167,15 +167,15 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     protected abstract IEnumerator Trutin();
     public abstract IEnumerator AttackColliderControl(string _Name);
 
-    IEnumerator CoolTime(int _Number, float _Time)
+    IEnumerator Skill_Cooldown_time(int _Number, float _Time)
     {
         float _CurrTime = _Time;
-        GameDataManager.Instance.CoolTime[_Number].fillAmount = 1;
+        GameDataManager.Instance.Cooldown_time_Image[_Number].fillAmount = 1;
 
-        while (GameDataManager.Instance.CoolTime[_Number].fillAmount > 0)
+        while (GameDataManager.Instance.Cooldown_time_Image[_Number].fillAmount > 0)
         {
             _CurrTime -= Time.deltaTime;
-            GameDataManager.Instance.CoolTime[_Number].fillAmount = _CurrTime / _Time;
+            GameDataManager.Instance.Cooldown_time_Image[_Number].fillAmount = _CurrTime / _Time;
             yield return null;
         }
     }
@@ -335,11 +335,14 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(PV.IsMine)
         {
-            if (!Anime.GetBool("Rock") && !delay && !Stun && gameObject.tag == "Player" && !Anime.GetBool("Attack"))
+            if (NetworkManager.Instance.GameChat.activeSelf == false)
             {
-                Move_X = (Input.GetAxis("Horizontal") * Rd.transform.right.x + Input.GetAxis("Vertical") * Rd.transform.forward.x) * Speed;
-                Move_Z = (Input.GetAxis("Vertical") * Rd.transform.forward.z + Input.GetAxis("Horizontal") * Rd.transform.right.z) * Speed;
-                Rd.velocity = new Vector3(Move_X, Rd.velocity.y, Move_Z);
+                if (!Anime.GetBool("Rock") && !delay && !Stun && gameObject.tag == "Player" && !Anime.GetBool("Attack"))
+                {
+                    Move_X = (Input.GetAxis("Horizontal") * Rd.transform.right.x + Input.GetAxis("Vertical") * Rd.transform.forward.x) * Speed;
+                    Move_Z = (Input.GetAxis("Vertical") * Rd.transform.forward.z + Input.GetAxis("Horizontal") * Rd.transform.right.z) * Speed;
+                    Rd.velocity = new Vector3(Move_X, Rd.velocity.y, Move_Z);
+                }
             }
         }
         else Rd.transform.position = Vector3.Lerp(Rd.transform.position, CurPos, 10f * Time.deltaTime);

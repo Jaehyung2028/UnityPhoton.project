@@ -37,7 +37,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
     [Header("È­¸é UI")]
     public GameObject SelectTool, SkillTool, StatTool;
     [SerializeField] Image[] Skill;
-    public Image[] CoolTime;
+    public Image[] Cooldown_time_Image;
     public Image HP, LerpHP;
     public Text WinText;
 
@@ -101,7 +101,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
             for (int i = 0; i < Skill.Length; i++)
             {
                 Skill[i].sprite = IsMineObj.GetComponent<PlayerBace>().Skill[i];
-                CoolTime[i].fillAmount = 0;
+                Cooldown_time_Image[i].fillAmount = 0;
             }
 
             Cursor.visible = false;
