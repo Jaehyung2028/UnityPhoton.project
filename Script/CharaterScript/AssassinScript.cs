@@ -120,8 +120,8 @@ public class AssassinScript : PlayerBace
                     for (int i = 0; i < _Player.Length; i++)
                     {
                         if (_Player[i].gameObject.tag == "Player" && _Player[i].gameObject.GetComponent<PlayerBace>().Rd != Rd)
-                            if (_Player[i].gameObject.GetComponent<PlayerBace>().Team != Team)
-                                _Player[i].gameObject.GetComponent<PlayerBace>().PV.RPC("PlayerBleeding", RpcTarget.All, Damage);
+                            if (_Player[i].gameObject.GetComponent<PlayerBace>().Team != Team && _Player[i].gameObject.GetComponent<PlayerBace>().PV.IsMine)
+                                _Player[i].gameObject.GetComponent<PlayerBace>().PV.RPC("PlayerBleeding", RpcTarget.All, Damage, Team);
                     }
 
                 }

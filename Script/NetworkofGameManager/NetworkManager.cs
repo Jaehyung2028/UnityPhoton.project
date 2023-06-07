@@ -116,7 +116,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
                 if (_BlueTeam == _RedTeam)
                 {
-                    for (int i = 0; i < ChatTextList.Length; i++) ChatTextList[i].text = "";
+                    PV.RPC("ChatText_Rest", RpcTarget.All);
                     PhotonNetwork.CurrentRoom.IsOpen = false;
                     PhotonNetwork.LoadLevel("Loding");
                 }
@@ -397,6 +397,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GameChatTextList[ChatTextList.Length - 1].text = msg;
     }
     #endregion
+
+    [PunRPC]
+    void ChatText_Rest() { for (int i = 0; i < ChatTextList.Length; i++) ChatTextList[i].text = "";}
 
     [PunRPC]
     public void GameOver()

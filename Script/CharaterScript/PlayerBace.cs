@@ -241,15 +241,14 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    public IEnumerator PlayerBleeding(float _Damage)
+    public IEnumerator PlayerBleeding(float _Damage, string _Team)
     {
         int _Count = 0;
         NickName.text = "ÃâÇ÷";
 
         while (_Count < 10)
         {
-            if (gameObject.tag == "Player" && PV.IsMine)
-                PV.RPC("DatageHit", RpcTarget.All, Damage);
+            StartCoroutine(DatageHit(_Damage, _Team));
 
             _Count++;
             yield return new WaitForSeconds(1f);

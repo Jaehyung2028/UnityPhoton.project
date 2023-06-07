@@ -55,7 +55,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         CharacterData.Name.Add("Warrior",  new DataLIst(200, 4, 30, new float[] { 15, 10, 20, 20 }, new float[] { 1.5f, 2f, 2f, 0f }));
         CharacterData.Name.Add("Fighter",  new DataLIst(150, 5, 20, new float[] { 10, 15, 15, 20 }, new float[] { 0f, 2f, 2.5f, 1f }));
         CharacterData.Name.Add("Magic",    new DataLIst(100, 4, 25, new float[] { 20, 15, 15, 20 }, new float[] { 0f, 2f, 1.5f, 1f }));
-        CharacterData.Name.Add("Assassin", new DataLIst(100, 6, 20, new float[] { 20, 10, 15, 10 }, new float[] { 0f, 1.5f, 0.5f, 2f }));
+        CharacterData.Name.Add("Assassin", new DataLIst(100, 6, 20, new float[] { 20, 10, 15, 10 }, new float[] { 0f, 1.5f, 0.1f, 2f }));
     }
 
 
@@ -119,14 +119,11 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         while(!Aready)
             yield return new WaitForSeconds(1f);
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            RedTower._TowerInstance();
-            BlueTower._TowerInstance();
-        }
+        if (PhotonNetwork.LocalPlayer.IsMasterClient) { RedTower._TowerInstance(); BlueTower._TowerInstance(); }
 
         WinText.text = "잠시후 게임이 시작됩니다.";
         yield return new WaitForSeconds(5f);
+
         WinText.text = "";
         SelectTool.SetActive(true);
     }
