@@ -61,6 +61,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    // 첫 생성시 데이터를 할당 및 Func에 함수 할당
     void DataReset()
     {
 
@@ -106,6 +107,8 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         else MoveValue = 0;
     }
 
+    // 플레이어의 공격 함수를 관리
+    //추상함수를 이용하여 각 클래스에 따라 재정의
     void PlayerAttack()
     {
 
@@ -167,6 +170,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     protected abstract IEnumerator Trutin();
     public abstract IEnumerator AttackColliderControl(string _Name);
 
+    //스킬의 쿨타일
     IEnumerator Skill_Cooldown_time(int _Number, float _Time)
     {
         float _CurrTime = _Time;
@@ -180,6 +184,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    //플레이어의 피격 판정
     [PunRPC]
     public IEnumerator DatageHit(float _Damage, string _Team)
     {
@@ -230,6 +235,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    // 플레이어 상태
     [PunRPC]
     public IEnumerator PlayerStun(float _Time)
     {
@@ -239,7 +245,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         Stun = false;
         NickName.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
     }
-
+    // 플레이어 상태
     [PunRPC]
     public IEnumerator PlayerBleeding(float _Damage, string _Team)
     {
@@ -277,6 +283,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         Destroy(_Text.transform.gameObject);
     }
 
+    //피격시 효과
     IEnumerator ColorChage()
     {
 
@@ -289,6 +296,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
             Render[i].material.color = OriginColor[i];
     }
 
+    //플레이어 및 타워 타격시 조건에 따라 그 객체의 함수를 실행
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && other.gameObject.GetComponent<PlayerBace>().PV.IsMine)

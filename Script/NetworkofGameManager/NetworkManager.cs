@@ -60,26 +60,32 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     #region 버튼
+    
+    //닉네임 입력 후 서버의 접속기능을 하는 버튼
     public void JoinButton()
     {
         if(PlayerNickName.text != "") PhotonNetwork.ConnectUsingSettings();
         else StartCoroutine("FailedText", "닉네임을 입력하세요.");
     }
+    //룸 입장 상태에서 다시 타이틀 화면으로 돌아가는 기능을 하는 버튼
     public void ExitButton()
     {
         ButtonManager.instance.OptionTool.SetActive(false);
         PhotonNetwork.Disconnect();
     }
 
+    // 룸 생성을 위한 기능을 하는 버튼
     public void CreatRoomButton()
     {
         if(CreatRoomName.text != "") PhotonNetwork.CreateRoom(CreatRoomName.text, new RoomOptions { MaxPlayers = 6 });
         else StartCoroutine("FailedText", "방이름을 입력하세요.");
     }
+    //빠른 시작을 통해 랜덤한 룸에 입장하는 기능을 가진 버튼
     public void RandomJoinRoomButton() => PhotonNetwork.JoinRandomRoom();
-
+    //룸을 떠나는 기능을 하는 버튼
     public void RoomExitButton() => PhotonNetwork.LeaveRoom();
-
+    //마스터 클라이언트는 모든 플레이어의 커스텀 프로퍼티를 조사해 IsReady의 키 값이 True , 여러 조건을 만족시 모든 플레이어에게 씬 로딩 전달
+    //마스터 클라이어트가 아닌 경우 커스텀 프로퍼티를 활용하여 Ready 상태를 변환
     public void ReadyButton()
     {
         if (!PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -127,6 +133,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 StartCoroutine("FailedText", "2인 이상 부터 시작가능합니다.");
         }
     }
+    //팀 체인지 버튼은 커스텀 프로퍼티를 활용하여 Team의 키값을 변경 후 룸에 위치한 플레이어의 위치를 조정
+    //PRC를 통해 자신의 상태를 전달하여 동기화를 시킴
     public void TeamChageButton()
     {
             if (PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == "Blue")
@@ -197,6 +205,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SelectRoomObj.SetActive(false);
         TitleObj.SetActive(true);
     }
+
+    //서버 접속 완료시 콜백 함수를 통해 포톤 서버에 자신의 닉네임을 전달 후 로비에 접속
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.LocalPlayer.NickName = PlayerNickName.text;
@@ -216,6 +226,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region 룸 관리
+
+    //룸 접속시 룸안의 플레이어를 조사에 각 넘버에 따른 플레이어 배치 후 자신의 넘버를 찾아 표시
     public override void OnJoinedRoom()
     {
         InRoomObj.SetActive(true);
@@ -249,13 +261,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         PV.RPC("RoomPlayerNumber", RpcTarget.Others, null);
     }
+
+    //룸을 퇴장시 콜백함수를 통해 채팅 초기화
     public override void OnLeftRoom()
     {
         for (int i = 0; i < Team.Length; i++) { Team[i].text = ""; Team[i].transform.GetChild(0).gameObject.SetActive(false); }
         InRoomObj.SetActive(false);
     }
+
+    // 룸에 새로운 플레이어 접속시 RPC를 통해 자신의 입장을 채팅을 통해 모든 플레이어에게 알림
     public override void OnPlayerEnteredRoom(Player newPlayer) => ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
 
+    // 플레이어가 룸을 퇴장시 콜백함수를 통해 플레이어의 위치를 비우고 마스터 클라이언트였을 경우 그에 맞는 조치를 취함
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
@@ -265,6 +282,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PV.RPC("RoomPlayerNumber", RpcTarget.All);
     }
 
+    //룸의 플레이어의 넘버를 넘겨받아 자신 또는 플레이어의 조건에 맞게 상태를 변환
     [PunRPC]
     void RoomPlayerNumber()
     {
@@ -288,6 +306,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
+    // 플레이어 상태 변환
     [PunRPC]
     void TeamChage(int _Number)
     {
@@ -298,6 +317,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region 플레이어 프로퍼티
+
+    // 커스텀 프로퍼티의 콜백함수를 통해 Ready의 값에 따른 플레이어의 상태 변환
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if (changedProps.ContainsKey("IsReady"))
@@ -352,17 +373,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region #채팅 구현
+    //RPC를 통해 자신의 InpuField의 텍스트를 룸의 플레이어에게 전달
     public void Send()
     {       
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
         ChatInput.text = "";
     }
+    //RPC를 통해 자신의 인게임 안의 InpuField의 텍스트를 룸의 플레이어에게 전달
     public void GameSend()
     {
         PV.RPC("GameChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + GameChatInput.text);
         GameChatInput.text = "";
     }
     
+    //미리 할당되어 있는 Text에 RPC로 전달받은 매개변수를 받아와 할당
+    //Text 사용 상태가 모든 완료 되었을 경우 Text의 내용을 한칸씩 끌어올려 재사용
     [PunRPC]
     void ChatRPC(string msg)
     {
@@ -379,7 +404,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         for (int j = 1; j < ChatTextList.Length; j++) ChatTextList[j - 1].text = ChatTextList[j].text;
         ChatTextList[ChatTextList.Length - 1].text = msg;
     }
-
+    // 인게임의 채팅 Text
     [PunRPC]
     void GameChatRPC(string msg)
     {
@@ -397,7 +422,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GameChatTextList[ChatTextList.Length - 1].text = msg;
     }
     #endregion
-
+    //인게임 채팅 Text 초기화
     [PunRPC]
     void ChatText_Rest() { for (int i = 0; i < ChatTextList.Length; i++) ChatTextList[i].text = "";}
 
