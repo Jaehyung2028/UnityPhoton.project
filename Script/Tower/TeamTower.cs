@@ -13,11 +13,8 @@ public class TeamTower : MonoBehaviour
     {
         if(PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            GameObject _Tower = new GameObject();
-            if (IsRed)
-                _Tower = PhotonNetwork.InstantiateRoomObject("Tower/RedTower", RedPos.position, RedPos.rotation);
-            else
-                _Tower = PhotonNetwork.InstantiateRoomObject("Tower/BlueTower", BluePos.position, BluePos.rotation);
+            GameObject _Tower = IsRed? PhotonNetwork.InstantiateRoomObject("Tower/RedTower", RedPos.position, RedPos.rotation) 
+                : PhotonNetwork.InstantiateRoomObject("Tower/BlueTower", BluePos.position, BluePos.rotation);
         }
     }
 }
