@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
 
     public Character CharacterData = new Character();
 
+    //따로 데이터를 Joson으로 관리 하지않고 코드 안에서 관리
     private void InData()
     {
         CharacterData.Name.Add("Warrior",  new DataLIst(200, 4, 30, new float[] { 15, 10, 20, 20 }, new float[] { 1.5f, 2f, 2f, 0f }));
@@ -72,6 +74,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         MyTeam = PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == "Red" ? Red : Blue;
     }
 
+    //인게임 안의 채팅의 InputField를 키패트로 사용할수 있도록 구현
     private void Update()
     {
         if (NetworkManager.Instance.GameChat.activeSelf == false && Input.GetKeyDown(KeyCode.Return))
@@ -88,6 +91,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //캐릭터 선택 후 조건 충족시 자신의 클라이언트에서 자신의 객체를 생성
     public void CharacterInstanceButton()
     {
         if (SelectCharaterName != "")
@@ -112,6 +116,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //메인씬 진입시 모든 플레이어의 씬 진입 체크를 한후 마스터 클라이언트에서 타워 생성
     IEnumerator AllPlayerReady_Check()
     {
         WinText.text = "다른 플레이어 기다리는 중...";

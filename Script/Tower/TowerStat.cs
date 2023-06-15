@@ -28,6 +28,7 @@ public class TowerStat : MonoBehaviour
         HPtext.color = PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == Team? Color.green : Color.red;
     }
 
+    //타워의 피격 판전은 클론이 아닌 자신의 클라이언트에서 룸의 모든 플레이어에게 RPC를 통해 전달
     [PunRPC]
     public IEnumerator TowerHit(float _Damage, string _Team)
     {
