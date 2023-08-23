@@ -9,14 +9,14 @@ using System;
 
 public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [Header("ÅØ½ºÆ®")]
+    [Header("í…ìŠ¤íŠ¸")]
     [SerializeField] Text NickName;
     [SerializeField] Text DamageText;
 
-    [Header("ÀÌÆåÆ®")]
+    [Header("ì´í™íŠ¸")]
     [SerializeField] ParticleSystem HitEffect, HealEffect;
 
-    [Header("ÇÇ°İ½Ã ÄÃ·¯ Ã¼ÀÎÁö")]
+    [Header("í”¼ê²©ì‹œ ì»¬ëŸ¬ ì²´ì¸ì§€")]
     [SerializeField] protected SkinnedMeshRenderer[] Render;
     Color[] OriginColor;
 
@@ -25,7 +25,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     public Rigidbody Rd;
     [SerializeField] GameObject CaPos, TextPos;
 
-    [Header("Ä³¸¯ÅÍ µ¥ÀÌÅÍ")]
+    [Header("ìºë¦­í„° ë°ì´í„°")]
     [SerializeField] string _Name;
     [SerializeField] protected float Speed, HP;
     float NowHP;
@@ -33,18 +33,18 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     public string Team;
     public Sprite[] Skill;
 
-    [Header("Æ®·£½ºÆû µ¿±âÈ­ º¯¼ö")]
+    [Header("íŠ¸ëœìŠ¤í¼ ë™ê¸°í™” ë³€ìˆ˜")]
     Vector3 CurPos;
     Quaternion CurRot;
 
-    [Header("ÀÌµ¿ °ü·Ã º¯¼ö")]
+    [Header("ì´ë™ ê´€ë ¨ ë³€ìˆ˜")]
     float Move_X, Move_Z;
     int MoveValue;
 
-    [Header("Ä³¸¯ÅÍ »óÅÂ")]
+    [Header("ìºë¦­í„° ìƒíƒœ")]
     protected bool Stun = false, delay = false;
 
-    [Header("°ø°İ ÇÔ¼ö ¸ğÀ½")]
+    [Header("ê³µê²© í•¨ìˆ˜ ëª¨ìŒ")]
     Func<IEnumerator> AttackCoroutin;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -61,7 +61,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // Ã¹ »ı¼º½Ã µ¥ÀÌÅÍ¸¦ ÇÒ´ç ¹× Func¿¡ ÇÔ¼ö ÇÒ´ç
+    // ì²« ìƒì„±ì‹œ ë°ì´í„°ë¥¼ í• ë‹¹ ë° Funcì— í•¨ìˆ˜ í• ë‹¹
     void DataReset()
     {
 
@@ -107,8 +107,8 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         else MoveValue = 0;
     }
 
-    // ÇÃ·¹ÀÌ¾îÀÇ °ø°İ ÇÔ¼ö¸¦ °ü¸®
-    //Ãß»óÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© °¢ Å¬·¡½º¿¡ µû¶ó ÀçÁ¤ÀÇ
+    // í”Œë ˆì´ì–´ì˜ ê³µê²© í•¨ìˆ˜ë¥¼ ê´€ë¦¬
+    //ì¶”ìƒí•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ê° í´ë˜ìŠ¤ì— ë”°ë¼ ì¬ì •ì˜
     void PlayerAttack()
     {
 
@@ -170,7 +170,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
     protected abstract IEnumerator Trutin();
     public abstract IEnumerator AttackColliderControl(string _Name);
 
-    //½ºÅ³ÀÇ ÄğÅ¸ÀÏ
+    //ìŠ¤í‚¬ì˜ ì¿¨íƒ€ì¼
     IEnumerator Skill_Cooldown_time(int _Number, float _Time)
     {
         float _CurrTime = _Time;
@@ -184,7 +184,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    //ÇÃ·¹ÀÌ¾îÀÇ ÇÇ°İ ÆÇÁ¤
+    //í”Œë ˆì´ì–´ì˜ í”¼ê²© íŒì •
     [PunRPC]
     public IEnumerator DatageHit(float _Damage, string _Team)
     {
@@ -235,22 +235,22 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î »óÅÂ
+    // í”Œë ˆì´ì–´ ìƒíƒœ
     [PunRPC]
     public IEnumerator PlayerStun(float _Time)
     {
         Stun = true;
-        NickName.text = "±âÀı";
+        NickName.text = "ê¸°ì ˆ";
         yield return new WaitForSeconds(_Time);
         Stun = false;
         NickName.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
     }
-    // ÇÃ·¹ÀÌ¾î »óÅÂ
+    // í”Œë ˆì´ì–´ ìƒíƒœ
     [PunRPC]
     public IEnumerator PlayerBleeding(float _Damage, string _Team)
     {
         int _Count = 0;
-        NickName.text = "ÃâÇ÷";
+        NickName.text = "ì¶œí˜ˆ";
 
         while (_Count < 10)
         {
@@ -283,7 +283,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
         Destroy(_Text.transform.gameObject);
     }
 
-    //ÇÇ°İ½Ã È¿°ú
+    //í”¼ê²©ì‹œ íš¨ê³¼
     IEnumerator ColorChage()
     {
 
@@ -296,7 +296,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
             Render[i].material.color = OriginColor[i];
     }
 
-    //ÇÃ·¹ÀÌ¾î ¹× Å¸¿ö Å¸°İ½Ã Á¶°Ç¿¡ µû¶ó ±× °´Ã¼ÀÇ ÇÔ¼ö¸¦ ½ÇÇà
+    //í”Œë ˆì´ì–´ ë° íƒ€ì›Œ íƒ€ê²©ì‹œ ì¡°ê±´ì— ë”°ë¼ ê·¸ ê°ì²´ì˜ í•¨ìˆ˜ë¥¼ ì‹¤í–‰
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && other.gameObject.GetComponent<PlayerBace>().PV.IsMine)
@@ -331,7 +331,7 @@ public abstract class PlayerBace : MonoBehaviourPunCallbacks, IPunObservable
             GameDataManager.Instance.LerpHP.fillAmount = Mathf.Lerp(GameDataManager.Instance.LerpHP.fillAmount, GameDataManager.Instance.HP.fillAmount, Time.deltaTime);
 
             GameObject.Find("Canvas").transform.Find("Stat").Find("PlayerStat").GetComponent<Text>().text =
-                "Ã¼·Â : " + NowHP + " ½ºÇÇµå : " + Speed + " µ¥¹ÌÁö : " + Damage;
+                "ì²´ë ¥ : " + NowHP + " ìŠ¤í”¼ë“œ : " + Speed + " ë°ë¯¸ì§€ : " + Damage;
         }
         else
         {

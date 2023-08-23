@@ -8,7 +8,7 @@ public class Potion : MonoBehaviour
     [SerializeField] int HealValue;
     [SerializeField] PhotonView PV;
 
-    //Æ÷¼Ç Å‰µæ½Ã ÇÃ·¹ÀÌ¾îÀÇ Èú ÇÔ¼ö¸¦ ½ÇÇàÇÏ°í _Destroy RPC¸¦ ÅëÇØ ¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®°¡ Æ÷¼ÇÀ» Æ÷Åæ³×Æ®¿öÅ©¿¡¼­ »èÁ¦
+    //í¬ì…˜ í­ë“ì‹œ í”Œë ˆì´ì–´ì˜ í í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•˜ê³  _Destroy RPCë¥¼ í†µí•´ ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ê°€ í¬ì…˜ì„ í¬í†¤ë„¤íŠ¸ì›Œí¬ì—ì„œ ì‚­ì œ
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && other.gameObject.GetComponent<PlayerBace>().PV.IsMine)

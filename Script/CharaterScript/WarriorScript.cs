@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class WarriorScript : PlayerBace
 {
-    [Header("°ø°İ Äİ¶óÀÌ´õ")]
+    [Header("ê³µê²© ì½œë¼ì´ë”")]
     [SerializeField] BoxCollider AttackCollider;
     [SerializeField] SphereCollider QCollider;
 
-    [Header("°ø°İ ¿ÀºêÁ§Æ® »ı¼ºÀ§Ä¡")]
+    [Header("ê³µê²© ì˜¤ë¸Œì íŠ¸ ìƒì„±ìœ„ì¹˜")]
     [SerializeField] GameObject RPos;
 
-    [Header("°ø°İ ÀÌÆåÆ®")]
+    [Header("ê³µê²© ì´í™íŠ¸")]
     [SerializeField] ParticleSystem QEffect, EEffect, TEffect;
 
     [PunRPC]

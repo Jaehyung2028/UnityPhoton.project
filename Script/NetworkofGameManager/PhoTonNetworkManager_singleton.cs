@@ -6,8 +6,8 @@ public class PhoTonNetworkManager_singleton : MonoBehaviour
 {
     [SerializeField] GameObject PhoTonNetworkManager_Obj;
 
-    //Æ÷Åæºä ÄÄÆ÷³ÍÆ®¸¦ °¡Áø ¿ÀºêÁ§Æ®´Â ÀÏ¹İÀûÀÎ ½Ì±ÛÅæ ÆĞÅÏ »ç¿ëÀÌ ºÒ°¡ÇÑ ¹®Á¦·Î ÀÎÇØ
-    //NetworkManagerÀÇ ºÎ¸ğ ¿ÀºêÁ§Æ®¸¦ È°¿ëÇÏ¿© ½Ì±ÛÅæ ÆĞÅÏ°ú À¯»çÇÏ°Ô ±¸Çö
+    //í¬í†¤ë·° ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ëŠ” ì¼ë°˜ì ì¸ ì‹±ê¸€í†¤ íŒ¨í„´ ì‚¬ìš©ì´ ë¶ˆê°€í•œ ë¬¸ì œë¡œ ì¸í•´
+    //NetworkManagerì˜ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë¥¼ í™œìš©í•˜ì—¬ ì‹±ê¸€í†¤ íŒ¨í„´ê³¼ ìœ ì‚¬í•˜ê²Œ êµ¬í˜„
     private void Awake()
     {
         if(GameObject.Find("PhoTonNetworkManager") != null)

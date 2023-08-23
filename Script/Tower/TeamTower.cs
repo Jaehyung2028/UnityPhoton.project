@@ -8,7 +8,7 @@ public class TeamTower : MonoBehaviour
     [SerializeField] Transform RedPos, BluePos;
     [SerializeField] bool IsRed;
 
-    //¸ğµç ÇÃ·¹ÀÌ¾î°¡ ¾À ÁøÀÔ ¼º°ø½Ã ¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®°¡ Æ÷Åæ³×Æ®¿öÅ© ·ë¿ÀºêÁ§Æ®·Î Å¸¿ö¸¦ »ı¼º
+    //ëª¨ë“  í”Œë ˆì´ì–´ê°€ ì”¬ ì§„ì… ì„±ê³µì‹œ ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ê°€ í¬í†¤ë„¤íŠ¸ì›Œí¬ ë£¸ì˜¤ë¸Œì íŠ¸ë¡œ íƒ€ì›Œë¥¼ ìƒì„±
     public void _TowerInstance()
     {
         if(PhotonNetwork.LocalPlayer.IsMasterClient)

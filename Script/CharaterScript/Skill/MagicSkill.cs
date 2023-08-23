@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class MagicSkill : MonoBehaviour
 {
-    [Header("½ºÅ³ Á¾·ù")]
+    [Header("ìŠ¤í‚¬ ì¢…ë¥˜")]
     [SerializeField] bool R, T;
 
     [SerializeField] PhotonView PV;

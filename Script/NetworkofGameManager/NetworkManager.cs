@@ -12,11 +12,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
 
-    [Header("Å¸ÀÌÆ²È­¸é")]
+    [Header("íƒ€ì´í‹€í™”ë©´")]
     public GameObject TilteCanvas, TitleObj;
     public InputField PlayerNickName;
 
-    [Header("·Îºñ È­¸é")]
+    [Header("ë¡œë¹„ í™”ë©´")]
     public GameObject SelectRoomObj, RoomListObj;
     public InputField CreatRoomName;
     public int TeamNumber;
@@ -25,13 +25,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] Button[] RoomListButton;
     [SerializeField] Button PreviousButton, NextButton;
 
-    [Header("·ë È­¸é")]
+    [Header("ë£¸ í™”ë©´")]
     public GameObject InRoomObj;
     [SerializeField] InputField ChatInput;
     [SerializeField] Text[] ChatTextList;
     [SerializeField] Text InRoomName, InRoomReadyorStart;
 
-    [Header("°ÔÀÓ È­¸é")]
+    [Header("ê²Œì„ í™”ë©´")]
     public GameObject GameChat;
     public InputField GameChatInput;
     public Text[] GameChatTextList;
@@ -54,38 +54,38 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
-        LobbyPlayerCountText.text = "Á¢¼ÓÀÚ : " + PhotonNetwork.CountOfPlayers.ToString() + " ´ë±â½Ç : " + (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms).ToString();
+        LobbyPlayerCountText.text = "ì ‘ì†ì : " + PhotonNetwork.CountOfPlayers.ToString() + " ëŒ€ê¸°ì‹¤ : " + (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms).ToString();
 
         if (PhotonNetwork.InRoom && ChatInput.text != "" && Input.GetKeyDown(KeyCode.Return)) { Send(); ChatInput.ActivateInputField(); }
     }
 
-    #region ¹öÆ°
+    #region ë²„íŠ¼
     
-    //´Ğ³×ÀÓ ÀÔ·Â ÈÄ ¼­¹öÀÇ Á¢¼Ó±â´ÉÀ» ÇÏ´Â ¹öÆ°
+    //ë‹‰ë„¤ì„ ì…ë ¥ í›„ ì„œë²„ì˜ ì ‘ì†ê¸°ëŠ¥ì„ í•˜ëŠ” ë²„íŠ¼
     public void JoinButton()
     {
         if(PlayerNickName.text != "") PhotonNetwork.ConnectUsingSettings();
-        else StartCoroutine("FailedText", "´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+        else StartCoroutine("FailedText", "ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”.");
     }
-    //·ë ÀÔÀå »óÅÂ¿¡¼­ ´Ù½Ã Å¸ÀÌÆ² È­¸éÀ¸·Î µ¹¾Æ°¡´Â ±â´ÉÀ» ÇÏ´Â ¹öÆ°
+    //ë£¸ ì…ì¥ ìƒíƒœì—ì„œ ë‹¤ì‹œ íƒ€ì´í‹€ í™”ë©´ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ê¸°ëŠ¥ì„ í•˜ëŠ” ë²„íŠ¼
     public void ExitButton()
     {
         ButtonManager.instance.OptionTool.SetActive(false);
         PhotonNetwork.Disconnect();
     }
 
-    // ·ë »ı¼ºÀ» À§ÇÑ ±â´ÉÀ» ÇÏ´Â ¹öÆ°
+    // ë£¸ ìƒì„±ì„ ìœ„í•œ ê¸°ëŠ¥ì„ í•˜ëŠ” ë²„íŠ¼
     public void CreatRoomButton()
     {
         if(CreatRoomName.text != "") PhotonNetwork.CreateRoom(CreatRoomName.text, new RoomOptions { MaxPlayers = 6 });
-        else StartCoroutine("FailedText", "¹æÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.");
+        else StartCoroutine("FailedText", "ë°©ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.");
     }
-    //ºü¸¥ ½ÃÀÛÀ» ÅëÇØ ·£´ıÇÑ ·ë¿¡ ÀÔÀåÇÏ´Â ±â´ÉÀ» °¡Áø ¹öÆ°
+    //ë¹ ë¥¸ ì‹œì‘ì„ í†µí•´ ëœë¤í•œ ë£¸ì— ì…ì¥í•˜ëŠ” ê¸°ëŠ¥ì„ ê°€ì§„ ë²„íŠ¼
     public void RandomJoinRoomButton() => PhotonNetwork.JoinRandomRoom();
-    //·ëÀ» ¶°³ª´Â ±â´ÉÀ» ÇÏ´Â ¹öÆ°
+    //ë£¸ì„ ë– ë‚˜ëŠ” ê¸°ëŠ¥ì„ í•˜ëŠ” ë²„íŠ¼
     public void RoomExitButton() => PhotonNetwork.LeaveRoom();
-    //¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®´Â ¸ğµç ÇÃ·¹ÀÌ¾îÀÇ Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼¸¦ Á¶»çÇØ IsReadyÀÇ Å° °ªÀÌ True , ¿©·¯ Á¶°ÇÀ» ¸¸Á·½Ã ¸ğµç ÇÃ·¹ÀÌ¾î¿¡°Ô ¾À ·Îµù Àü´Ş
-    //¸¶½ºÅÍ Å¬¶óÀÌ¾îÆ®°¡ ¾Æ´Ñ °æ¿ì Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼¸¦ È°¿ëÇÏ¿© Ready »óÅÂ¸¦ º¯È¯
+    //ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ëŠ” ëª¨ë“  í”Œë ˆì´ì–´ì˜ ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹°ë¥¼ ì¡°ì‚¬í•´ IsReadyì˜ í‚¤ ê°’ì´ True , ì—¬ëŸ¬ ì¡°ê±´ì„ ë§Œì¡±ì‹œ ëª¨ë“  í”Œë ˆì´ì–´ì—ê²Œ ì”¬ ë¡œë”© ì „ë‹¬
+    //ë§ˆìŠ¤í„° í´ë¼ì´ì–´íŠ¸ê°€ ì•„ë‹Œ ê²½ìš° ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹°ë¥¼ í™œìš©í•˜ì—¬ Ready ìƒíƒœë¥¼ ë³€í™˜
     public void ReadyButton()
     {
         if (!PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -107,7 +107,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 {
                     if (PhotonNetwork.PlayerListOthers[i].CustomProperties["IsReady"].ToString() == "false")
                     {
-                        StartCoroutine("FailedText", "¸ğµç ÇÃ·¹ÀÌ¾î°¡ ÁØºñµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                        StartCoroutine("FailedText", "ëª¨ë“  í”Œë ˆì´ì–´ê°€ ì¤€ë¹„ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
                         return;
                     }
                     else
@@ -127,14 +127,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                     PhotonNetwork.LoadLevel("Loding");
                 }
                 else
-                    StartCoroutine("FailedText", "ÆÀº° ÀÎ¿øÀÌ ¸ÂÁö¾Ê½À´Ï´Ù.");
+                    StartCoroutine("FailedText", "íŒ€ë³„ ì¸ì›ì´ ë§ì§€ì•ŠìŠµë‹ˆë‹¤.");
             }
             else
-                StartCoroutine("FailedText", "2ÀÎ ÀÌ»ó ºÎÅÍ ½ÃÀÛ°¡´ÉÇÕ´Ï´Ù.");
+                StartCoroutine("FailedText", "2ì¸ ì´ìƒ ë¶€í„° ì‹œì‘ê°€ëŠ¥í•©ë‹ˆë‹¤.");
         }
     }
-    //ÆÀ Ã¼ÀÎÁö ¹öÆ°Àº Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼¸¦ È°¿ëÇÏ¿© TeamÀÇ Å°°ªÀ» º¯°æ ÈÄ ·ë¿¡ À§Ä¡ÇÑ ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ Á¶Á¤
-    //PRC¸¦ ÅëÇØ ÀÚ½ÅÀÇ »óÅÂ¸¦ Àü´ŞÇÏ¿© µ¿±âÈ­¸¦ ½ÃÅ´
+    //íŒ€ ì²´ì¸ì§€ ë²„íŠ¼ì€ ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹°ë¥¼ í™œìš©í•˜ì—¬ Teamì˜ í‚¤ê°’ì„ ë³€ê²½ í›„ ë£¸ì— ìœ„ì¹˜í•œ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ì¡°ì •
+    //PRCë¥¼ í†µí•´ ìì‹ ì˜ ìƒíƒœë¥¼ ì „ë‹¬í•˜ì—¬ ë™ê¸°í™”ë¥¼ ì‹œí‚´
     public void TeamChageButton()
     {
             if (PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == "Blue")
@@ -188,9 +188,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region ½ÇÆĞ ¸Ş¼¼Áö
-    public override void OnCreateRoomFailed(short returnCode, string message) => StartCoroutine("FailedText", "°°Àº ÀÌ¸§ÀÇ ¹æÀÌ Á¸ÀçÇÕ´Ï´Ù.");
-    public override void OnJoinRandomFailed(short returnCode, string message) => StartCoroutine("FailedText", "Âü°¡ °¡´ÉÇÑ ¹æÀÌ ¾ø½À´Ï´Ù.");
+    #region ì‹¤íŒ¨ ë©”ì„¸ì§€
+    public override void OnCreateRoomFailed(short returnCode, string message) => StartCoroutine("FailedText", "ê°™ì€ ì´ë¦„ì˜ ë°©ì´ ì¡´ì¬í•©ë‹ˆë‹¤.");
+    public override void OnJoinRandomFailed(short returnCode, string message) => StartCoroutine("FailedText", "ì°¸ê°€ ê°€ëŠ¥í•œ ë°©ì´ ì—†ìŠµë‹ˆë‹¤.");
     IEnumerator FailedText(string _Text)
     {
         FaildText.text = _Text;
@@ -199,14 +199,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region ³×Æ®¿öÅ© ¿¬°á °ü¸®
+    #region ë„¤íŠ¸ì›Œí¬ ì—°ê²° ê´€ë¦¬
     public override void OnDisconnected(DisconnectCause cause)
     {
         SelectRoomObj.SetActive(false);
         TitleObj.SetActive(true);
     }
 
-    //¼­¹ö Á¢¼Ó ¿Ï·á½Ã Äİ¹é ÇÔ¼ö¸¦ ÅëÇØ Æ÷Åæ ¼­¹ö¿¡ ÀÚ½ÅÀÇ ´Ğ³×ÀÓÀ» Àü´Ş ÈÄ ·Îºñ¿¡ Á¢¼Ó
+    //ì„œë²„ ì ‘ì† ì™„ë£Œì‹œ ì½œë°± í•¨ìˆ˜ë¥¼ í†µí•´ í¬í†¤ ì„œë²„ì— ìì‹ ì˜ ë‹‰ë„¤ì„ì„ ì „ë‹¬ í›„ ë¡œë¹„ì— ì ‘ì†
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.LocalPlayer.NickName = PlayerNickName.text;
@@ -215,7 +215,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region ·Îºñ °ü¸®
+    #region ë¡œë¹„ ê´€ë¦¬
     public override void OnJoinedLobby()
     {
         TitleObj.SetActive(false);
@@ -225,9 +225,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region ·ë °ü¸®
+    #region ë£¸ ê´€ë¦¬
 
-    //·ë Á¢¼Ó½Ã ·ë¾ÈÀÇ ÇÃ·¹ÀÌ¾î¸¦ Á¶»ç¿¡ °¢ ³Ñ¹ö¿¡ µû¸¥ ÇÃ·¹ÀÌ¾î ¹èÄ¡ ÈÄ ÀÚ½ÅÀÇ ³Ñ¹ö¸¦ Ã£¾Æ Ç¥½Ã
+    //ë£¸ ì ‘ì†ì‹œ ë£¸ì•ˆì˜ í”Œë ˆì´ì–´ë¥¼ ì¡°ì‚¬ì— ê° ë„˜ë²„ì— ë”°ë¥¸ í”Œë ˆì´ì–´ ë°°ì¹˜ í›„ ìì‹ ì˜ ë„˜ë²„ë¥¼ ì°¾ì•„ í‘œì‹œ
     public override void OnJoinedRoom()
     {
         InRoomObj.SetActive(true);
@@ -257,32 +257,32 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         InRoomName.text = PhotonNetwork.CurrentRoom.Name;
         for (int i = 0; i < ChatTextList.Length; i++) ChatTextList[i].text = "";
-        ChatRPC("<color=yellow>¹æ¿¡ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+        ChatRPC("<color=yellow>ë°©ì— ì°¸ê°€í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
 
         PV.RPC("RoomPlayerNumber", RpcTarget.Others, null);
     }
 
-    //·ëÀ» ÅğÀå½Ã Äİ¹éÇÔ¼ö¸¦ ÅëÇØ Ã¤ÆÃ ÃÊ±âÈ­
+    //ë£¸ì„ í‡´ì¥ì‹œ ì½œë°±í•¨ìˆ˜ë¥¼ í†µí•´ ì±„íŒ… ì´ˆê¸°í™”
     public override void OnLeftRoom()
     {
         for (int i = 0; i < Team.Length; i++) { Team[i].text = ""; Team[i].transform.GetChild(0).gameObject.SetActive(false); }
         InRoomObj.SetActive(false);
     }
 
-    // ·ë¿¡ »õ·Î¿î ÇÃ·¹ÀÌ¾î Á¢¼Ó½Ã RPC¸¦ ÅëÇØ ÀÚ½ÅÀÇ ÀÔÀåÀ» Ã¤ÆÃÀ» ÅëÇØ ¸ğµç ÇÃ·¹ÀÌ¾î¿¡°Ô ¾Ë¸²
-    public override void OnPlayerEnteredRoom(Player newPlayer) => ChatRPC("<color=yellow>" + newPlayer.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+    // ë£¸ì— ìƒˆë¡œìš´ í”Œë ˆì´ì–´ ì ‘ì†ì‹œ RPCë¥¼ í†µí•´ ìì‹ ì˜ ì…ì¥ì„ ì±„íŒ…ì„ í†µí•´ ëª¨ë“  í”Œë ˆì´ì–´ì—ê²Œ ì•Œë¦¼
+    public override void OnPlayerEnteredRoom(Player newPlayer) => ChatRPC("<color=yellow>" + newPlayer.NickName + "ë‹˜ì´ ì°¸ê°€í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
 
-    // ÇÃ·¹ÀÌ¾î°¡ ·ëÀ» ÅğÀå½Ã Äİ¹éÇÔ¼ö¸¦ ÅëÇØ ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ºñ¿ì°í ¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®¿´À» °æ¿ì ±×¿¡ ¸Â´Â Á¶Ä¡¸¦ ÃëÇÔ
+    // í”Œë ˆì´ì–´ê°€ ë£¸ì„ í‡´ì¥ì‹œ ì½œë°±í•¨ìˆ˜ë¥¼ í†µí•´ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ë¹„ìš°ê³  ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ì˜€ì„ ê²½ìš° ê·¸ì— ë§ëŠ” ì¡°ì¹˜ë¥¼ ì·¨í•¨
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + "´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù</color>");
+        ChatRPC("<color=yellow>" + otherPlayer.NickName + "ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤</color>");
         Team[otherPlayer.GetPlayerNumber()].text = "";
         Team[otherPlayer.GetPlayerNumber()].transform.GetChild(0).gameObject.SetActive(false);
         if(PhotonNetwork.LocalPlayer.IsMasterClient) Team[PhotonNetwork.LocalPlayer.GetPlayerNumber()].transform.GetChild(0).gameObject.SetActive(true);
         PV.RPC("RoomPlayerNumber", RpcTarget.All);
     }
 
-    //·ëÀÇ ÇÃ·¹ÀÌ¾îÀÇ ³Ñ¹ö¸¦ ³Ñ°Ü¹Ş¾Æ ÀÚ½Å ¶Ç´Â ÇÃ·¹ÀÌ¾îÀÇ Á¶°Ç¿¡ ¸Â°Ô »óÅÂ¸¦ º¯È¯
+    //ë£¸ì˜ í”Œë ˆì´ì–´ì˜ ë„˜ë²„ë¥¼ ë„˜ê²¨ë°›ì•„ ìì‹  ë˜ëŠ” í”Œë ˆì´ì–´ì˜ ì¡°ê±´ì— ë§ê²Œ ìƒíƒœë¥¼ ë³€í™˜
     [PunRPC]
     void RoomPlayerNumber()
     {
@@ -306,7 +306,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    // ÇÃ·¹ÀÌ¾î »óÅÂ º¯È¯
+    // í”Œë ˆì´ì–´ ìƒíƒœ ë³€í™˜
     [PunRPC]
     void TeamChage(int _Number)
     {
@@ -316,9 +316,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region ÇÃ·¹ÀÌ¾î ÇÁ·ÎÆÛÆ¼
+    #region í”Œë ˆì´ì–´ í”„ë¡œí¼í‹°
 
-    // Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼ÀÇ Äİ¹éÇÔ¼ö¸¦ ÅëÇØ ReadyÀÇ °ª¿¡ µû¸¥ ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ º¯È¯
+    // ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹°ì˜ ì½œë°±í•¨ìˆ˜ë¥¼ í†µí•´ Readyì˜ ê°’ì— ë”°ë¥¸ í”Œë ˆì´ì–´ì˜ ìƒíƒœ ë³€í™˜
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if (changedProps.ContainsKey("IsReady"))
@@ -329,7 +329,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region #¹æ¸®½ºÆ® °»½Å
+    #region #ë°©ë¦¬ìŠ¤íŠ¸ ê°±ì‹ 
     public void RoomListClick(int num)
     {
         if (num == -2) --currentPage;
@@ -372,22 +372,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region #Ã¤ÆÃ ±¸Çö
-    //RPC¸¦ ÅëÇØ ÀÚ½ÅÀÇ InpuFieldÀÇ ÅØ½ºÆ®¸¦ ·ëÀÇ ÇÃ·¹ÀÌ¾î¿¡°Ô Àü´Ş
+    #region #ì±„íŒ… êµ¬í˜„
+    //RPCë¥¼ í†µí•´ ìì‹ ì˜ InpuFieldì˜ í…ìŠ¤íŠ¸ë¥¼ ë£¸ì˜ í”Œë ˆì´ì–´ì—ê²Œ ì „ë‹¬
     public void Send()
     {       
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
         ChatInput.text = "";
     }
-    //RPC¸¦ ÅëÇØ ÀÚ½ÅÀÇ ÀÎ°ÔÀÓ ¾ÈÀÇ InpuFieldÀÇ ÅØ½ºÆ®¸¦ ·ëÀÇ ÇÃ·¹ÀÌ¾î¿¡°Ô Àü´Ş
+    //RPCë¥¼ í†µí•´ ìì‹ ì˜ ì¸ê²Œì„ ì•ˆì˜ InpuFieldì˜ í…ìŠ¤íŠ¸ë¥¼ ë£¸ì˜ í”Œë ˆì´ì–´ì—ê²Œ ì „ë‹¬
     public void GameSend()
     {
         PV.RPC("GameChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + GameChatInput.text);
         GameChatInput.text = "";
     }
     
-    //¹Ì¸® ÇÒ´çµÇ¾î ÀÖ´Â Text¿¡ RPC·Î Àü´Ş¹ŞÀº ¸Å°³º¯¼ö¸¦ ¹Ş¾Æ¿Í ÇÒ´ç
-    //Text »ç¿ë »óÅÂ°¡ ¸ğµç ¿Ï·á µÇ¾úÀ» °æ¿ì TextÀÇ ³»¿ëÀ» ÇÑÄ­¾¿ ²ø¾î¿Ã·Á Àç»ç¿ë
+    //ë¯¸ë¦¬ í• ë‹¹ë˜ì–´ ìˆëŠ” Textì— RPCë¡œ ì „ë‹¬ë°›ì€ ë§¤ê°œë³€ìˆ˜ë¥¼ ë°›ì•„ì™€ í• ë‹¹
+    //Text ì‚¬ìš© ìƒíƒœê°€ ëª¨ë“  ì™„ë£Œ ë˜ì—ˆì„ ê²½ìš° Textì˜ ë‚´ìš©ì„ í•œì¹¸ì”© ëŒì–´ì˜¬ë ¤ ì¬ì‚¬ìš©
     [PunRPC]
     void ChatRPC(string msg)
     {
@@ -404,7 +404,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         for (int j = 1; j < ChatTextList.Length; j++) ChatTextList[j - 1].text = ChatTextList[j].text;
         ChatTextList[ChatTextList.Length - 1].text = msg;
     }
-    // ÀÎ°ÔÀÓÀÇ Ã¤ÆÃ Text
+    // ì¸ê²Œì„ì˜ ì±„íŒ… Text
     [PunRPC]
     void GameChatRPC(string msg)
     {
@@ -422,7 +422,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GameChatTextList[ChatTextList.Length - 1].text = msg;
     }
     #endregion
-    //ÀÎ°ÔÀÓ Ã¤ÆÃ Text ÃÊ±âÈ­
+    //ì¸ê²Œì„ ì±„íŒ… Text ì´ˆê¸°í™”
     [PunRPC]
     void ChatText_Rest() { for (int i = 0; i < ChatTextList.Length; i++) ChatTextList[i].text = "";}
 

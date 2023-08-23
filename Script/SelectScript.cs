@@ -10,12 +10,12 @@ public class SelectScript : MonoBehaviour, IPointerClickHandler
     [SerializeField] string ImageNumber;
 
 
-    // Ä³¸¯ÅÍ ¼±ÅÃ Ã¢¿¡¼­ Å¬¸¯½Ã ÇØ´ç Ä³¸¯ÅÍÀÇ ÀÌ¸§À» °ÔÀÓ ¸Å´ÏÀú¿¡ ³Ñ±è
-    public void OnPointerClick(PointerEventData eventData)
+    // ìºë¦­í„° ì„ íƒ ì°½ì—ì„œ í´ë¦­ì‹œ í•´ë‹¹ ìºë¦­í„°ì˜ ì´ë¦„ì„ ê²Œì„ ë§¤ë‹ˆì €ì— ë„˜ê¹€
+    public void OnPointerClick(PointerEventData eventData) 
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            for (int i = 0; i < Select_Image.Length; i++)
+            for (int i = 0; i < Select_Image.Length; i++) 
             {
                 if (ImageNumber == Select_Image[i].name)
                     Select_Image[i].gameObject.SetActive(true);

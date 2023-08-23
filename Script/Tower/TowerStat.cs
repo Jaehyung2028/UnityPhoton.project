@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 public class TowerStat : MonoBehaviour
 {
-    [Header("Å¸¿ö Ã¼·Â")]
+    [Header("íƒ€ì›Œ ì²´ë ¥")]
     public float MaxHP, HP;
     [SerializeField] GameObject HPBace;
     [SerializeField] Text HPtext;
 
-    [Header("ÆÄ±« ÀÌÆåÆ®")]
+    [Header("íŒŒê´´ ì´í™íŠ¸")]
     [SerializeField] ParticleSystem OverEffect;
     [SerializeField] GameObject[] OffSkin;
 
-    [Header("Å¸¿ö ÆÀ")]
+    [Header("íƒ€ì›Œ íŒ€")]
     public string Team;
 
     public PhotonView PV;
@@ -28,7 +28,7 @@ public class TowerStat : MonoBehaviour
         HPtext.color = PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == Team? Color.green : Color.red;
     }
 
-    //Å¸¿öÀÇ ÇÇ°İ ÆÇÀüÀº Å¬·ĞÀÌ ¾Æ´Ñ ÀÚ½ÅÀÇ Å¬¶óÀÌ¾ğÆ®¿¡¼­ ·ëÀÇ ¸ğµç ÇÃ·¹ÀÌ¾î¿¡°Ô RPC¸¦ ÅëÇØ Àü´Ş
+    //íƒ€ì›Œì˜ í”¼ê²© íŒì „ì€ í´ë¡ ì´ ì•„ë‹Œ ìì‹ ì˜ í´ë¼ì´ì–¸íŠ¸ì—ì„œ ë£¸ì˜ ëª¨ë“  í”Œë ˆì´ì–´ì—ê²Œ RPCë¥¼ í†µí•´ ì „ë‹¬
     [PunRPC]
     public IEnumerator TowerHit(float _Damage, string _Team)
     {
@@ -45,7 +45,7 @@ public class TowerStat : MonoBehaviour
                 OverEffect.Play();
 
                 GameDataManager.Instance.WinText.text = Team == "Red" ?
-                 "<color=blue><size=150>" + "Blue" + "</size></color>" + "ÆÀ ½Â¸®" : "<color=red><size=150>" + "Red" + "</size></color>" + "ÆÀ ½Â¸®";
+                 "<color=blue><size=150>" + "Blue" + "</size></color>" + "íŒ€ ìŠ¹ë¦¬" : "<color=red><size=150>" + "Red" + "</size></color>" + "íŒ€ ìŠ¹ë¦¬";
 
                 yield return new WaitForSeconds(10f);
 

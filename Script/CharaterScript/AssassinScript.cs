@@ -7,13 +7,13 @@ using Photon.Pun.Demo.PunBasics;
 
 public class AssassinScript : PlayerBace
 {
-    [Header("°ø°İ Äİ¶óÀÌ´õ")]
+    [Header("ê³µê²© ì½œë¼ì´ë”")]
     [SerializeField] BoxCollider AttackCollider;
 
-    [Header("Åõ¸í È¿°ú °ü·Ã")]
+    [Header("íˆ¬ëª… íš¨ê³¼ ê´€ë ¨")]
     [SerializeField] protected GameObject NameText, OriginSkin, ChangeSkin;
 
-    [Header("°ø°İ ÀÌÆåÆ®")]
+    [Header("ê³µê²© ì´í™íŠ¸")]
     [SerializeField] ParticleSystem AttackEffect, QEfect, TEfect;
 
     [PunRPC]

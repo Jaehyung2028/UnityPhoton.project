@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class FighterScript : PlayerBace
 {
-    [Header("°ø°İ Äİ¶óÀÌ´õ")]
+    [Header("ê³µê²© ì½œë¼ì´ë”")]
     [SerializeField] BoxCollider AttackCollider, RCollider;
 
-    [Header("°ø°İ ÀÌÆåÆ®")]
+    [Header("ê³µê²© ì´í™íŠ¸")]
     [SerializeField] ParticleSystem AttackEffect;
 
     [PunRPC]

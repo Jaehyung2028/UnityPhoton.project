@@ -9,7 +9,7 @@ public class ButtonManager : MonoBehaviour
 {
     public static ButtonManager instance;
 
-    [Header("¿É¼Ç UI")]
+    [Header("ì˜µì…˜ UI")]
     public GameObject OptionTool;
     [SerializeField] Dropdown ScreenOption;
     [SerializeField] Toggle FullScreen;

@@ -15,7 +15,7 @@ public class LodingScript : MonoBehaviourPunCallbacks
 
     private void Awake() { PlayerList(); StartCoroutine(MainScene()); }
 
-    // ·Îµù È­¸é¿¡ ÇÃ·¹ÀÌ¾îÀÇ ÀÌ¸§À» Ç¥½Ã
+    // ë¡œë”© í™”ë©´ì— í”Œë ˆì´ì–´ì˜ ì´ë¦„ì„ í‘œì‹œ
     void PlayerList()
     {
         NetworkManager.Instance.TilteCanvas.SetActive(false);
@@ -49,7 +49,7 @@ public class LodingScript : MonoBehaviourPunCallbacks
         }
     }
 
-    // °¢ ÇÃ·¹ÀÌ¾îÀÇ ¸ŞÀÎ¾À ·Îµù »óÅÂ¿¡ µû¸¥ Ä¿½ºÅÒ ÇÁ·ÎÆÛÆ¼ º¯°æ
+    // ê° í”Œë ˆì´ì–´ì˜ ë©”ì¸ì”¬ ë¡œë”© ìƒíƒœì— ë”°ë¥¸ ì»¤ìŠ¤í…€ í”„ë¡œí¼í‹° ë³€ê²½
     IEnumerator MainScene()
     {
         MainSceneLoad = SceneManager.LoadSceneAsync("Main");
@@ -66,7 +66,7 @@ public class LodingScript : MonoBehaviourPunCallbacks
         int Count = 5;
         while(Count >= 0)
         {
-            CountText.text = Count + "ÃÊ ÈÄ ½ÃÀÛÇÕ´Ï´Ù.";
+            CountText.text = Count + "ì´ˆ í›„ ì‹œì‘í•©ë‹ˆë‹¤.";
             Count--;
             yield return new WaitForSeconds(1f);
         }
@@ -77,7 +77,7 @@ public class LodingScript : MonoBehaviourPunCallbacks
 
     }
 
-    // ¸ğµç ÇÃ·¹ÀÌ¾îÀÇ ¾À ·Îµå »óÅÂ°¡ ¿Ï·á µÇ¾úÀ»¶§ ¾À ÀüÈ¯
+    // ëª¨ë“  í”Œë ˆì´ì–´ì˜ ì”¬ ë¡œë“œ ìƒíƒœê°€ ì™„ë£Œ ë˜ì—ˆì„ë•Œ ì”¬ ì „í™˜
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (changedProps.ContainsKey("SceneReady") && changedProps["SceneReady"].ToString() == "true")

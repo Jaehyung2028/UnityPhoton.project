@@ -32,17 +32,17 @@ public class DataLIst
 public class GameDataManager : MonoBehaviourPunCallbacks
 {
     public static GameDataManager Instance;
-    [Header("Å¸¿ö ½ºÅ©¸³Æ®")]
+    [Header("íƒ€ì›Œ ìŠ¤í¬ë¦½íŠ¸")]
     [SerializeField] TeamTower RedTower, BlueTower;
 
-    [Header("È­¸é UI")]
+    [Header("í™”ë©´ UI")]
     public GameObject SelectTool, SkillTool, StatTool;
     [SerializeField] Image[] Skill;
     public Image[] Cooldown_time_Image;
     public Image HP, LerpHP;
     public Text WinText;
 
-    [Header("ÇÃ·¹ÀÌ¾î »ı¼º À§Ä¡")]
+    [Header("í”Œë ˆì´ì–´ ìƒì„± ìœ„ì¹˜")]
     [SerializeField] GameObject MyTeam, Red, Blue;
 
     GameObject IsMineObj;
@@ -51,7 +51,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
 
     public Character CharacterData = new Character();
 
-    //µû·Î µ¥ÀÌÅÍ¸¦ JosonÀ¸·Î °ü¸® ÇÏÁö¾Ê°í ÄÚµå ¾È¿¡¼­ °ü¸®
+    //ë”°ë¡œ ë°ì´í„°ë¥¼ Josonìœ¼ë¡œ ê´€ë¦¬ í•˜ì§€ì•Šê³  ì½”ë“œ ì•ˆì—ì„œ ê´€ë¦¬
     private void InData()
     {
         CharacterData.Name.Add("Warrior",  new DataLIst(200, 4, 30, new float[] { 15, 10, 20, 20 }, new float[] { 1.5f, 2f, 2f, 0f }));
@@ -74,7 +74,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         MyTeam = PhotonNetwork.LocalPlayer.CustomProperties["IsTeam"].ToString() == "Red" ? Red : Blue;
     }
 
-    //ÀÎ°ÔÀÓ ¾ÈÀÇ Ã¤ÆÃÀÇ InputField¸¦ Å°ÆĞÆ®·Î »ç¿ëÇÒ¼ö ÀÖµµ·Ï ±¸Çö
+    //ì¸ê²Œì„ ì•ˆì˜ ì±„íŒ…ì˜ InputFieldë¥¼ í‚¤íŒ¨íŠ¸ë¡œ ì‚¬ìš©í• ìˆ˜ ìˆë„ë¡ êµ¬í˜„
     private void Update()
     {
         if (NetworkManager.Instance.GameChat.activeSelf == false && Input.GetKeyDown(KeyCode.Return))
@@ -91,7 +91,7 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //Ä³¸¯ÅÍ ¼±ÅÃ ÈÄ Á¶°Ç ÃæÁ·½Ã ÀÚ½ÅÀÇ Å¬¶óÀÌ¾ğÆ®¿¡¼­ ÀÚ½ÅÀÇ °´Ã¼¸¦ »ı¼º
+    //ìºë¦­í„° ì„ íƒ í›„ ì¡°ê±´ ì¶©ì¡±ì‹œ ìì‹ ì˜ í´ë¼ì´ì–¸íŠ¸ì—ì„œ ìì‹ ì˜ ê°ì²´ë¥¼ ìƒì„±
     public void CharacterInstanceButton()
     {
         if (SelectCharaterName != "")
@@ -116,17 +116,17 @@ public class GameDataManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //¸ŞÀÎ¾À ÁøÀÔ½Ã ¸ğµç ÇÃ·¹ÀÌ¾îÀÇ ¾À ÁøÀÔ Ã¼Å©¸¦ ÇÑÈÄ ¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®¿¡¼­ Å¸¿ö »ı¼º
+    //ë©”ì¸ì”¬ ì§„ì…ì‹œ ëª¨ë“  í”Œë ˆì´ì–´ì˜ ì”¬ ì§„ì… ì²´í¬ë¥¼ í•œí›„ ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ì—ì„œ íƒ€ì›Œ ìƒì„±
     IEnumerator AllPlayerReady_Check()
     {
-        WinText.text = "´Ù¸¥ ÇÃ·¹ÀÌ¾î ±â´Ù¸®´Â Áß...";
+        WinText.text = "ë‹¤ë¥¸ í”Œë ˆì´ì–´ ê¸°ë‹¤ë¦¬ëŠ” ì¤‘...";
 
         while(!Aready)
             yield return new WaitForSeconds(1f);
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient) { RedTower._TowerInstance(); BlueTower._TowerInstance(); }
 
-        WinText.text = "Àá½ÃÈÄ °ÔÀÓÀÌ ½ÃÀÛµË´Ï´Ù.";
+        WinText.text = "ì ì‹œí›„ ê²Œì„ì´ ì‹œì‘ë©ë‹ˆë‹¤.";
         yield return new WaitForSeconds(5f);
 
         WinText.text = "";
